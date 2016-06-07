@@ -1,0 +1,289 @@
+@import 'variables.less';
+@font-face {
+  font-family: 'ArcadeRounded';
+  src: url('@{path-fonts}/arcade_r.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/*---------------------------Modal--------------------------*/
+.modal{
+	top:150px;
+	.modal-dialog{
+		width: 300px;
+		margin:0 auto;
+	}
+	.modal-content{
+		background-color: @assistant0;
+		border:none;
+		.modal-header{
+			border-bottom: none;
+			h4{
+				color: #fff;
+	    		text-align: center;
+	    		font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+			}
+		}
+		.modal-body{
+			width: 100%;
+			.btn-group-vertical .btn{
+				width: 100%;
+			}
+		}
+	}
+}
+h3{
+	color:@game-color-3;
+	text-align: center;
+	margin: 20px 0;
+	font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+.btn-group,.btn-group-vertical{
+	>.btn+.btn{
+		margin-left: auto;
+	}
+}
+
+.btn-group,.btn-group-vertical{
+	.btn{
+		font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+		line-height: 30px;
+		vertical-align: middle;
+		text-align: center;
+		background-color: @assistant0;
+		color: @assistant3;
+		border:2px solid @assistant3;
+		border-radius: 4px;
+		max-width: 300px;
+		height: 44px;
+		margin: 0 auto 20px auto;
+		box-shadow: none;
+		outline-style: none;
+		&:hover{
+			border-color: @assistant8;
+			background-color: @assistant0;
+			color: @assistant8;
+		}
+		&#btn-menu-game{
+			width: 100%;
+			max-width: 100%;
+			margin: 0 auto;
+		}
+	}
+}
+body{
+	height: 100%;
+	background-color: @assistant0;
+	background-size: cover;
+}
+#logo img{
+	display: block;
+	padding: 20px 0;
+}
+#game-view{
+	display: block;
+	canvas{
+		margin: 30px auto -80px auto;;
+		display: block;
+		width: 100%;
+		max-width: 400px;
+	}
+}
+#menu-view {
+	margin: 0 auto;
+	display: block;
+	.btn-group-vertical{
+		margin: 0 auto;
+		display: block;
+		.btn.btn-default{
+			&:first-of-type{
+				margin-top:20px;
+			}
+			&:last-of-type{
+				margin-top:60px;
+			}
+		}
+	}
+}
+#login-view{
+	font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+	margin: 0 auto;
+	display: block;
+	label{
+		width: 100%;
+		text-align: center;
+		line-height: 30px;
+		vertical-align: middle;
+		color: @assistant8;
+		margin-top:30px;
+	}
+	.btn-group-vertical{
+		margin: 0 auto;
+		float: none;
+		display: block;
+		.btn{
+			color:@assistant8;
+			border-color: @game-color-2;
+			border-radius: 5px;
+			&:hover{
+				border-color: @game-color-1;
+			}
+			&:first-of-type{
+				background-color: @fb-color;
+			}
+			&:last-of-type{
+				background-color: @twitter-color;
+			}
+		}
+		span{
+			line-height: 42px;
+			position: absolute;
+			left:85%;
+			&.glyphicon-remove{
+				color: red;
+			}
+			&.glyphicon-ok{
+				color:green;
+			}
+			&#icon-remove-2,&#icon-ok-2{
+				top:65px;
+			}
+		}
+	}
+}
+#profile-view{
+	font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+	margin: 0 auto;
+	display: block;
+	ul{
+		list-style: none;
+		padding-left: 0;
+		.input-group{
+			margin-top: 20px;
+			vertical-align: middle;
+			input{
+				font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+				height: 46px;
+				border:2px solid @assistant8;
+				border-left: 0;
+				&.form-control{
+					background-color: @assistant0;
+					color:@assistant8;
+					border-radius: 4px;
+					border-bottom-left-radius: 0;
+					border-top-left-radius: 0;
+					text-align: right;
+					line-height: 46px;
+					height: 46px;
+					&:focus{
+						outline-style: none;
+						box-shadow: none;
+						transition:none;
+					}
+				}
+			}
+			.btn{
+				font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+				line-height: 30px;
+				vertical-align: middle;
+				text-align: center;
+				background-color: @assistant0;
+				color: @assistant3;
+				border:2px solid @assistant3;
+				border-radius: 4px;
+				max-width: 300px;
+				height: 46px;
+				margin-right: -1px;
+				box-shadow: none;
+				outline-style: none;
+				&.icon{
+					margin-left: 10px;
+					border-color: @assistant3;
+					color:@assistant3;
+					&:hover,&.selected{
+						border-color: @assistant8;
+						color:@assistant8;
+					}
+					span{
+						font-size: 18px;
+						vertical-align: middle;
+					}
+				}
+				&.disabled{
+					border-color: #fff;
+					color:#fff;
+					border-width: 2px;
+					border-right: 0;
+					opacity: 1;
+					cursor: default;
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+					outline-style: none;
+				}
+			}
+		}
+		.btn-group{
+			margin: 20px auto 0 auto;
+			width: 100%;
+			.btn{
+				width: 45%;
+				&:first-of-type{
+					margin-right: 5%;
+				}
+				&:last-of-type{
+					margin-left: 5%;
+				}
+				&:hover{
+					border-color: @assistant8;
+					color:@assistant8;
+				}
+				&.disabled{
+					border-color: @assistant2;
+					color: @assistant2;
+				}
+			}
+		}
+	}
+
+}
+#highscores-view{
+	font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+	margin: 0 auto;
+	display: block;
+	ul{
+		list-style: none;
+		margin-bottom: 20px;
+		li{
+			margin: 10px 0;
+			font-size: 14px;
+			&:nth-of-type(odd){
+				color:@assistant8;
+			}
+			&:nth-of-type(even){
+				color: @assistant3;
+			}
+			span{
+				&:last-of-type{
+					float: right;
+				}
+			}
+		}
+	}
+	.btn-group .btn{
+		width: 100%;
+		max-width: 100%;
+		}
+}
+footer .alert{
+	display: block;
+	position: absolute;
+	bottom: 0;
+	margin-bottom: 0;
+	width: 100%;
+	font-family: 'ArcadeRounded',Helvetica,Arial,sans-serif;
+	text-align: center;
+}
+@import 'media-queries.less';

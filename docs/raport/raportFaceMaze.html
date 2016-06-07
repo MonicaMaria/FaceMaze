@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ro">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Raport FaceMaze</title>
+		<link rel="stylesheet" href="scholarly.css">
+	</head>
+	<body prefix="schema: http://schema.org/ xsd: http://www.w3.org/2001/XMLSchema# sa: https://ns.science.ai/">
+		<article id="what" typeof="schema:ScholarlyArticle" resource="#" >
+			<h1>Face Maze - Raport</h1>
+			<section>
+				<ol>
+					<li property="schema:author" typeof="sa:ContributorRole">
+						<a property="schema:author" href="#" typeof="schema:Person">
+							<span property="schema:givenName">Cristian</span>
+							<span property="schema:familyName">Ion</span>
+						</a>
+					</li>
+					<li property="schema:author" typeof="sa:ContributorRole">
+						<a property="schema:author" href="#" typeof="schema:Person">
+							<span property="schema:givenName">Alexandru Cezar</span>
+							<span property="schema:familyName">Popescu</span>
+						</a>
+					</li>
+					<li property="schema:author" typeof="sa:ContributorRole">
+						<a property="schema:author" href="#" typeof="schema:Person">
+							<span property="schema:givenName">Monica Maria</span>
+							<span property="schema:familyName">Vizitiu</span>
+						</a>
+					</li>
+				</ol>
+			</section>
+			<section typeof="sa:Abstract" id="abstract">
+				<h2>Abstract</h2>
+				<p>FaceMaze este un joc bazat pe clasicul Pac-Man, dar cu unele personalizari in functie de jucator. Acest document descrie cum functioneaza jocul, modul de implementare si resursele necesare pentru a dezvolta aplicatia.</p>
+			</section>
+			<section>
+				<h2>Introducere</h2>
+				<p>FaceMaze este o aplicatie care implementeaza un joc disponibil pe web, permitand unui utilizator sa joace Pac-Man. Utilizatorul va fi figurat pe baza imaginii disponibile in profilul lui, in cadrul unui site de socializare. Jucatorul va circula intr-un labirint, consumand pilule energetice, care ii vor mari scorul. In cadrul labirintului vor putea aparea fantome maligne care vor fi infatisate prin pozele prietenilor din reteaua sociala. Daca o fantoma prinde jucatorul, aplicatia va genera in mod automat un mesaj pe Twitter de forma: "Jucand #FaceMaze, am fost inghitit de @utilizator".</p>
+			</section>
+			
+			<section>
+				<h2>Descriere</h2>
+				<p>Pentru a putea accesa FaceMaze, este necesar ca doritorul sa se conecteze cu un cont de Facebook. La prima conectare i se va genera un cont in aplicatia FaceMaze, iar pentru a putea juca va trebui sa-si introduca contul de Twitter (necesar pentru serviciul de microblogging). Odata ce contul sau pe joc a fost creat, isi va putea modifica datele din aplicatie si isi va putea vedea high-scorul.
+				Dupa acesti pasi, va putea juca. Utilizatorul va fi figurat pe baza imaginii sale de profil de pe Facebook iar fantomele vor fi ilustrate de pozele unor prieteni de-ai jucatorului de pe reteaua de socializare. 
+				</p>
+				<p>Cand o fantoma atinge jucatorul, aplicatia va genera un mesaj de forma: "Jucand #FaceMaze am fost inghitit de @utilizator". Pentru a eticheta prietenul malign, vom incerca sa facem match cu datele de pe Facebook(facem cautarea dupa nume in followers si following) cu datele de pe Twitter. Daca nu reusim sa facem match, cauzele principale fiind faptul ca prietenul de pe Facebook nu are cont de Twitter sau nu-l putem gasi dupa campurile filtrate, vom posta mesajul fara eticheta ci doar cu numele si prenumele persoanei respective. (nu dorim sa etichetam persoane care nu au legatura cu persoana cautata, caz aparut la persoane cu acelasi nume)</p>
+				<p>Jucatorul va manca pilule energetice pentru a-si creste scorul si pentru a putea trece la nivelul urmator, avand in labirint si niste pilule speciale(bomboane) care-i va permite sa "inghita" fantomele. In momentul in care jucatorul a "inghitit" o fantoma, aceasta se va deplasa spre "Casa fantomelor", unde dupa cateva secunde isi va reface infatisarea si statutul de fantoma.</p>
+				<p>Jucatorul va avea dreptul la 3 vieti pe parcursul jocului.</p>
+				<p>Cand nu mai exista pilule energetice, jucatorul poate trece la nivelul urmator.</p>
+			</section>
+			
+			<section>
+				<h2>Baza de date</h2>
+				<p>Un nou utilizator va fi inregistrat in baza de date la prima logare cu facebook, deoarece autentificarea in joc e realizata cu Facebook <code>Socialite</code>. Toti utilizatorii vor fi inregistrati in tabela Users.</p>
+				<p>Pentru a putea intra in joc un utilizator va trebui sa se logheze atat cu Facebook cat si cu Twitter, altfel nu va avea acces la pagina jocului.</p>
+				<p>In tabela Users, HighScore se va modifica doar daca scorul curent al utilizatorul depaseste HighScore-ul din baza de date. Avand scorul fiecarui jucator, vom putea crea un clasament, vizibil fiecarui jucator. Acesta va fi generat printr-o interogare a bazei de date a primilor 10 jucatori in ordinea scorului.
+				</p>
+			</section>
+			<section>
+				<h2>Arhitectura</h2>
+				<h3>MVC pattern - LARAVEL</h3>
+				<ul>
+					<li><strong>Model: </strong>Maze - labirintul generat, User - jucatorul</li>
+					<li><strong>View: </strong>Interfata grafica a jocului, paginile de login, meniu a jocului</li>
+					<li><strong>Controller: </strong>Logica aplicatiei: inregistrarea in joc, conectarea la joc, generarea labirintului, selectia fantomelor, etc.</li>
+				</ul>
+				<figure typeof="sa:Image">
+					<img src="arhitectura.png" width="880" height="655">
+					<figcaption>
+					  Arhitectura aplicatiei
+					</figcaption>
+				</figure>
+			</section>
+			
+			<section>
+				<h2>Interfata</h2>
+				
+				<figure typeof="sa:Image">
+					<img src="index.png" width="880">
+					<figcaption>
+					  Login
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="loginF.png" width="880">
+					<figcaption>
+					  Login cu Facebook cu succes, urmatorul pas: Login Twitter
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="loginT.png" width="880">
+					<figcaption>
+					  Login cu Twitter cu succes, urmatorul pas: Login Facebook
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="menu.png" width="880">
+					<figcaption>
+					  Logare cu succes, pregatire de joc; Main Menu
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="profile.png" width="880">
+					<figcaption>
+					  Profilul jucatorului, cu posibilitatea de a-si edita datele
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="highscores.jpg" width="880">
+					<figcaption>
+					  Clasamentul cu primii 10 jucatori in ordinea scorului
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level1.png" width="880">
+					<figcaption>
+					  Un posibil nivel 1 al jocului
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level2.png" width="880">
+					<figcaption>
+					  Un posibil nivel 2 al jocului - dificultate crescuta: 1 dead-end
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level5.png" width="880">
+					<figcaption>
+					  Un posibil nivel 5 al jocului - dificultate crescuta: 2 dead-ends
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level10.png" width="880">
+					<figcaption>
+					  Un posibil nivel 10 al jocului - dificultate crescuta: 4 dead-ends 
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level20.png" width="880">
+					<figcaption>
+					  Un posibil nivel 20 al jocului - dificultate crescuta: 5 dead-ends 
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="level30.png" width="880">
+					<figcaption>
+					  Un posibil nivel 30 al jocului
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="pause.png" width="880">
+					<figcaption>
+					  Pauza la joc
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="mute.png" width="880">
+					<figcaption>
+					  Inchide/deschide sunetul jocului
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="gameover.png" width="880">
+					<figcaption>
+					  Game Over!
+					</figcaption>
+				</figure>
+				<figure typeof="sa:Image">
+					<img src="tweetpost.png" width="880">
+					<figcaption>
+					  Postare automata tweet cu prieten etichetat si neetichetat
+					</figcaption>
+				</figure>
+				
+				
+			</section>
+			
+			<section>
+				<h2>Detalii de implementare</h2>
+				<h3>Generarea hartii</h3>
+				<p>Pentru generarea hartii, pentru a fi cat mai asemanatoare cu jocul original, consideram urmatoarele constrangeri:
+				</p>
+				<ul>
+				<li>Dimensiunea Hartii de 28 x 32 tile-uri</li>
+				<li>Coridoarele au grosimea de 1 tile</li>
+				<li>Formele peretilor permise : I, L, T, + sau forma patratica</li>
+				<li>Peretii de formele I, L, T, + au grosimea de 2 tile-uri</li>
+				</ul>
+				<h3>Plasarea peretilor</h3>
+				<p>Pentru generarea unei harti asemanatoare "pac-man", ne vom folosi de o harta ajutatoare. Harta ajutatoare va avea dimensiunea de 9x5 si va fi construita prin plasarea conform unui joc de tetris a formelor I, L, T, +. Aceste forme vor reprezenta peretii din harta finala.
+				</p>
+				<h3>Punctul de start</h3>
+				<p>Forma care va fi la baza hartii ajutatoare va fi un patrat ce va reprezenta punctul de start al fantomelor din joc. Sub acest patrat trebuie lasat un rand pentru pozitila de start a jucatorului.</p>
+				<h3>Forma finala a hartii</h3>
+				<p>Pentru a pastra aspectul jocului original "Pac-man", ne vom folosi de harta ajutatoare generata in pasii anteriori. Vom redimensiona celulele la 3x3 pentru a aduce harta la dimensiunea de 15x27. Oglindim harta obtinuta si obtinem 30x27. Rotim harta si obtinem 27x30. Marim latimea unui perete pe fiecare linie, apoi marim inaltimea unui perete pentru a ajunge la varianta finala de dimensiune 28x31.</p>
+				<h3>Dificultatea jocului</h3>
+				<p>Pentru a captiva atentia jucatorului, acesta va primi o provocare noua pe masura ce progreseaza. Fiecare nivel va oferi o harta de o dificultate mai mare, dar si inamici pe masura.</p>
+				<p>Dificultatea hartii este obtinuta prin alegerea aleatoare a unui numar de "dead-ends", in functie de nivel.</p>
+				<h3>Fantomele</h3>
+				<p>Fantomele au ca principal obiectiv sa captureze jucatorul. Acestea au implementate 3 moduri de comportament pentru a reprezenta o provocare destul de dificila pentru jucator, dar care poate fi invinsa. Cele 3 moduri variaza in functie de timpul jocului pentru fiecare fantoma.</p>
+				<h4>1. Modul CHASE</h4>
+				<p>Fantoma cauta jucatorul pentru a-l inghiti</p>
+				<h4>2. Modul SCATTER</h4>
+				<p>Se renunta la urmarire pentru cateva secunde, timp in care fantomele se indreapta catre "coltul" dedicat fiecareia. Dupa un timp se revine insa la modul CHASE</p>
+				<figure typeof="sa:Image">
+				 <img src="scatter-targets.png" width="224" height="288">
+				 <figcaption>
+				   Modul Scatter pentru fiecare fantoma
+				 </figcaption>
+				</figure>
+				<h4>3. Modul FRIGHTENED</h4>
+				<p>Fantomele devin "infricosate" ori de cate ori jucatorul consuma o pilula energetica, aceastea fiind vulnerabile. In acest mod, fantomele urmeaza o cale aleatoare astfel: la fiecare intersectie se decide printr-un pseudo-random number-generator, directia pe care o va lua.</p>
+				
+				<figure typeof="schema:Table">
+					<table>
+					  <thead>
+						<tr>
+						  <th>Mode</th>
+						  <th>Level 1</th>
+						  <th>Level 2-4</th>
+						  <th>Level 5+</th>
+						</tr>
+					  </thead>
+					  <tr>
+						<td>Scatter</td>
+						<td>7</td>
+						<td>7</td>
+						<td>5</td>
+					  </tr>
+					  <tr>
+						<td>Chase</td>
+						<td>20</td>
+						<td>20</td>
+						<td>20</td>
+					  </tr>
+					  <tr>
+						<td>Scatter</td>
+						<td>7</td>
+						<td>7</td>
+						<td>5</td>
+					  </tr>
+						<tr>
+						<td>Chase</td>
+						<td>20</td>
+						<td>20</td>
+						<td>20</td>
+					  </tr>
+					  <tr>
+						<td>Scatter</td>
+						<td>5</td>
+						<td>5</td>
+						<td>5</td>
+					  </tr>
+						<tr>
+						<td>Chase</td>
+						<td>20</td>
+						<td>1033</td>
+						<td>1037</td>
+					  </tr>
+					  <tr>
+						<td>Scatter</td>
+						<td>5</td>
+						<td>1/60</td>
+						<td>1/60</td>
+					  </tr>
+						<tr>
+						<td>Chase</td>
+						<td>infinit</td>
+						<td>infinit</td>
+						<td>infinit</td>
+					  </tr>
+					</table>
+					<p><i>Alternanta dintre modul Chase si Scatter al fantomelor in timpul jocului la anumite intervale. Valorile sunt exprimate in secunde.</i></p>
+				</figure>
+						
+				<h4>Miscarea fantomelor</h4>
+				<p>Fantomele se uita un pas inainte si decid directia care urmeaza sa o ia.</p>
+				<p>Fantomele nu isi pot schimba directia de miscare. Daca o fantoma intra intr-un tile cu 2 iesiri, va continua in aceeasi directie. Totusi la schimbarea modului de comportament al fantomei, fantomele sunt obligate sa isi schimbe directia.</p>
+				<p>Deciziile de miscare pentru fantome vor fi luate doar la apropierea intersectiilor, marcate cu verde, ca in imaginea urmatoare:</p>
+				
+				<figure typeof="sa:Image">
+				 <img src="intersection-map.png" width="224">
+				 <figcaption>
+				   Intersectiile jocului
+				 </figcaption>
+				</figure>
+				
+				<p>Intersectiile marcate cu galben restrictioneaza fantomele, ca acestea sa nu poata sa aleaga sa mearga in sus (exceptie in modul FRIGHTENED sau la schimbarea comportamentului fantomei).</p>
+				<p>Pentru a ajunge la destinatie, fantomele vor alege drumul cel mai scurt (exceptie face modul FRIGHTENED).</p>
+				
+				<h4>Tipuri de fantome</h4>
+				<h5>Fantoma rosie</h5>
+				<p>Aceasta fantoma incepe in afara casei fantomelor. Aceasta fantoma tinteste mereu catre jucator chiar si in modul Scatter, ceea ce il face sa stea mereu in modul Chase.</p>
+				<h5>Fantoma roz</h5>
+				<p>Aceasta fantoma iese din casa la inceperea jocului. Metoda de urmarire a acestei fantome difera de celelalte, intrucat are in vedere pozitia viitoare a jucatorului in loc de cea curenta. Fantoma priveste cu 4 tile-uri inaintea jucatorului in functie de directia sa.</p>
+				<figure typeof="sa:Image">
+				 <img src="pinky-targeting.png" width="224">
+				 <figcaption>
+				   Strategia fantomei roz
+				 </figcaption>
+				</figure>
+				<h5>Fantoma albastra</h5>
+				<p>Dupa cumularea unui numar de puncte de catre jucator, fantoma albastra decide sa plece din casa. Fantoma albastra are un comportament special. Aceasta isi decide directia in functie de pozitia jucatorului dar si de cea a fantomei rosii. Destinatia se calculeaza ca fiind pozitia determinata de dublul vectorului care porneste din pozitia fantomei rosii catre pozitia aflata la 2 tile-uri in fata jucatorului (in directia sa de deplasare).</p>
+				<figure typeof="sa:Image">
+				 <img src="inky-targeting.png" width="224" height="288">
+				 <figcaption>
+				   Strategia fantomei albastre
+				 </figcaption>
+				</figure>
+				<h5>Fantoma portocalie</h5>
+				<p>Ultima fantoma nu paraseste casa pana cand nu au fost consumate cel putin o treime din pilule de catre jucator. Fantoma portocalie se identifica prin 2 moduri de functionare, in functie de apropierea de jucator. Daca se afla la o distanta mai mare de 8 tile-uri, acesta va functiona similar cu fantoma rosie, avand drept tinta jucatorul. De indata ce ajunge la o distanta mai mica de 8 tile-uri, va urma calea din modul Scatter. </p>
+				
+			</section>
+			<section>
+				<h2>Tehnologii folosite</h2>
+				<ul>
+				<li>Laravel Framework - pentru organizarea MVC a aplicatiei, autentificare via Facebook Socialite</li>
+				<li>PHP - Server, Controller, Model</li>
+				<li>HTML5/CSS3, Javascript, JQuery pentru partea de front-end</li>
+				<li>SQLITE pentru lucrul cu baza de date via Laravel</li>
+				<li>Bootstrap - HTML, CSS, JavaScript Framework pentru ca aplicatia sa fie responsive</li>
+				<li>Ajax - pentru a comunica cu serverul, fara a fi necesara reincarcarea paginii. In contextul jocului aceasta facilitate ne-a fost utila in mai multe situatii:
+					<ul> 
+					<li>la incarcarea jocului si la schimbarea nivelului cerem server-ului sa creeze un nou labirint, sa aleaga 4 prieteni aleator de pe facebook si sa salveze scorul obtinut pana atunci;</li>
+					<li>in momentul in care jucatorul este inghitit de catre o fantoma, se cere server-ului sa actualizeze statusul jucatorului pe Twitter prin intermediul unui API.</li>
+					</ul>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Serviciu Web utilizat</h2>
+				<h3>REST</h3>
+				<p>Pentru a putea dispune de imaginile prietenilor de pe facebook, cat si de datele jucatorului vom folosi API de la Facebook. Pentru generarea mesajelor cu privire la starea jucatorului FaceMaze pe serviciul de microblogging Twitter vom folosi API de la Twitter.
+				Pentru a accesa datele unui jucator, cu ajutorul REST vom face urmatorii pasi:
+				</p>
+				<ul>
+					<li>Utilizatorul se conecteaza cu Facebook;</li>
+					<li>Vom cere informatiile utilizatorului printr-o cerere REST si vom primi un fisier in format Json cu datele necesare de la Facebook. (<code>GET /v2.5/{user-id}/picture HTTP/1.1</code>
+					Host: graph.facebook.com)</li>
+					<li>Vom face o alta cerere REST(GET) pentru a accesa prietenii jucatorului(friends + invitable_friends)</li>
+					<li>Pentru generarea mesajului pe Twitter se va face POST. Astfel, pe pagina utilizatorului va fi generat un tweet, etichetand fantoma "buclucasa".</li>
+				</ul>
+			</section>
+			<section>
+				<h2>API-uri folosite</h2>
+				<ul>
+					<li><strong>Facebook</strong>: pentru conectarea via Facebook si pentru obtinerea pozelor prin care sunt figurate fantomele si jucatorul</li>
+					<li><strong>Twitter</strong>: pentru generearea mesajului corespunzator: "Jucand #FaceMaze, am fost inghitit de @utilizator" si pentru posibila etichetare a prietenului-fantoma daca acesta se afla in lista de followers sau following primita de la Twitter pentru jucator.</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Distributia sarcinilor</h2>
+				<p><strong>Ion Cristian:</strong> 
+				<ul>
+					<li>Generare labirint in functie de nivel,</li> 
+					<li>Incarcarea nivelelor(Ajax),</li> 
+					<li>AI Fantome, Input player,</li> 
+					<li>Integrare Twitter API,</li> 
+					<li>Integrare Rendering Engine(PIXI),</li>
+					<li>Algoritm alegere imagine perete in functie de orientare,</li>
+					<li>Filtre fantome</li>
+					<li>HTML;</li>
+				</ul>
+				</p>
+				<p><strong>Popescu Alexandru:</strong>
+				<ul>
+					<li>HTML/CSS, Grafica,</li> 
+					<li>Implementare GUI(JQuery),</li> 
+					<li>Twitter API(matching prieten Facebook + tag),</li> 
+					<li>Database</li> 
+					<li>Responsiveness(Bootstrap Integration + Media Queries)</li>
+					<li>ux design(experienta utilizatorului in aplicatie),</li>
+					<li>Facebook API(alegere aleatoare 4 prieteni);</li>
+				</ul>
+				</p>
+				<p><strong>Vizitiu Monica:</strong> 
+				<ul>
+					<li>Facebook API(Autentificare - Socialite),</li> 
+					<li>Output Audio(Buzz Library),</li> 
+					<li>Modul Game Over,</li> 
+					<li>Twitter API(Ajax pentru postare tweet),</li> 
+					<li>Logica interactiunii dintre fantome si player,</li> 
+					<li>Scor,</li>
+					<li>Database,</li> 
+					<li>Filtre labirint,</li>
+					<li>Logout,</li>
+					<li>HTML.</li>
+				</ul>
+				</p>
+			</section>
+			<section>
+				<h2>Planificare</h2>
+				<ol>
+					<li>Front-end Static</li>
+					<li>Prototip joc</li>
+					<li>Creare baza de date</li>
+					<li>Modul Inregistrare/Logare</li>
+					<li>Integrare API-uri</li>
+					<li>Grafica finala joc</li>
+					<li>Audio joc</li>
+					<li>Finalizare Front-end</li>
+				</ol>
+			</section>
+		</article>
+	</body>
+</html>

@@ -1,0 +1,333 @@
+/*Colors*/
+/*Black to white colors*/
+/*Game colors*/
+/*Social colors*/
+/*End of colors declaration*/
+@font-face {
+  font-family: 'ArcadeRounded';
+  src: url('fonts/arcade_r.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/*---------------------------Modal--------------------------*/
+.modal {
+  top: 150px;
+}
+.modal .modal-dialog {
+  width: 300px;
+  margin: 0 auto;
+}
+.modal .modal-content {
+  background-color: #000000;
+  border: none;
+}
+.modal .modal-content .modal-header {
+  border-bottom: none;
+}
+.modal .modal-content .modal-header h4 {
+  color: #fff;
+  text-align: center;
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+}
+.modal .modal-content .modal-body {
+  width: 100%;
+}
+.modal .modal-content .modal-body .btn-group-vertical .btn {
+  width: 100%;
+}
+h3 {
+  color: #a53b3b;
+  text-align: center;
+  margin: 20px 0;
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  outline: 0 none;
+}
+.btn-group > .btn + .btn,
+.btn-group-vertical > .btn + .btn {
+  margin-left: auto;
+}
+.btn-group .btn,
+.btn-group-vertical .btn {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  line-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: #000000;
+  color: #777777;
+  border: 2px solid #777777;
+  border-radius: 4px;
+  max-width: 300px;
+  height: 44px;
+  margin: 0 auto 20px auto;
+  box-shadow: none;
+  outline-style: none;
+}
+.btn-group .btn:hover,
+.btn-group-vertical .btn:hover {
+  border-color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
+}
+.btn-group .btn#btn-menu-game,
+.btn-group-vertical .btn#btn-menu-game {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+body {
+  height: 100%;
+  background-color: #000000;
+  background-size: cover;
+}
+#logo img {
+  display: block;
+  padding: 20px 0;
+}
+#game-view {
+  display: block;
+}
+#game-view canvas {
+  margin: 30px auto -80px auto;
+  display: block;
+  width: 100%;
+  max-width: 400px;
+}
+#menu-view {
+  margin: 0 auto;
+  display: block;
+}
+#menu-view .btn-group-vertical {
+  margin: 0 auto;
+  display: block;
+}
+#menu-view .btn-group-vertical .btn.btn-default:first-of-type {
+  margin-top: 20px;
+}
+#menu-view .btn-group-vertical .btn.btn-default:last-of-type {
+  margin-top: 60px;
+}
+#login-view {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  display: block;
+}
+#login-view label {
+  width: 100%;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: middle;
+  color: #ffffff;
+  margin-top: 30px;
+}
+#login-view .btn-group-vertical {
+  margin: 0 auto;
+  float: none;
+  display: block;
+}
+#login-view .btn-group-vertical .btn {
+  color: #ffffff;
+  border-color: #5696d0;
+  border-radius: 5px;
+}
+#login-view .btn-group-vertical .btn:hover {
+  border-color: #19325c;
+}
+#login-view .btn-group-vertical .btn:first-of-type {
+  background-color: #3b5999;
+}
+#login-view .btn-group-vertical .btn:last-of-type {
+  background-color: #55acee;
+}
+#login-view .btn-group-vertical span {
+  line-height: 42px;
+  position: absolute;
+  left: 85%;
+}
+#login-view .btn-group-vertical span.glyphicon-remove {
+  color: red;
+}
+#login-view .btn-group-vertical span.glyphicon-ok {
+  color: green;
+}
+#login-view .btn-group-vertical span#icon-remove-2,
+#login-view .btn-group-vertical span#icon-ok-2 {
+  top: 65px;
+}
+#profile-view {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  display: block;
+}
+#profile-view ul {
+  list-style: none;
+  padding-left: 0;
+}
+#profile-view ul .input-group {
+  margin-top: 20px;
+  vertical-align: middle;
+}
+#profile-view ul .input-group input {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  height: 46px;
+  border: 2px solid #ffffff;
+  border-left: 0;
+}
+#profile-view ul .input-group input.form-control {
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 4px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  text-align: right;
+  line-height: 46px;
+  height: 46px;
+}
+#profile-view ul .input-group input.form-control:focus {
+  outline-style: none;
+  box-shadow: none;
+  transition: none;
+}
+#profile-view ul .input-group .btn {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  line-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: #000000;
+  color: #777777;
+  border: 2px solid #777777;
+  border-radius: 4px;
+  max-width: 300px;
+  height: 46px;
+  margin-right: -1px;
+  box-shadow: none;
+  outline-style: none;
+}
+#profile-view ul .input-group .btn.icon {
+  margin-left: 10px;
+  border-color: #777777;
+  color: #777777;
+}
+#profile-view ul .input-group .btn.icon:hover,
+#profile-view ul .input-group .btn.icon.selected {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+#profile-view ul .input-group .btn.icon span {
+  font-size: 18px;
+  vertical-align: middle;
+}
+#profile-view ul .input-group .btn.disabled {
+  border-color: #fff;
+  color: #fff;
+  border-width: 2px;
+  border-right: 0;
+  opacity: 1;
+  cursor: default;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline-style: none;
+}
+#profile-view ul .btn-group {
+  margin: 20px auto 0 auto;
+  width: 100%;
+}
+#profile-view ul .btn-group .btn {
+  width: 45%;
+}
+#profile-view ul .btn-group .btn:first-of-type {
+  margin-right: 5%;
+}
+#profile-view ul .btn-group .btn:last-of-type {
+  margin-left: 5%;
+}
+#profile-view ul .btn-group .btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+#profile-view ul .btn-group .btn.disabled {
+  border-color: #555555;
+  color: #555555;
+}
+#highscores-view {
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  display: block;
+}
+#highscores-view ul {
+  list-style: none;
+  margin-bottom: 20px;
+}
+#highscores-view ul li {
+  margin: 10px 0;
+  font-size: 14px;
+}
+#highscores-view ul li:nth-of-type(odd) {
+  color: #ffffff;
+}
+#highscores-view ul li:nth-of-type(even) {
+  color: #777777;
+}
+#highscores-view ul li span:last-of-type {
+  float: right;
+}
+#highscores-view .btn-group .btn {
+  width: 100%;
+  max-width: 100%;
+}
+footer .alert {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
+  width: 100%;
+  font-family: 'ArcadeRounded', Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+@media (min-width: 1400px) {
+  #game-view canvas {
+    max-width: 520px;
+  }
+}
+@media (min-width: 1200px) {
+  #login-view .btn-group-vertical span {
+    left: 80%;
+  }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  #login-view .btn-group-vertical span {
+    left: 95%;
+  }
+}
+@media (min-width: 980px) and (max-width: 992px) {
+  #login-view .btn-group-vertical span {
+    left: 95%;
+  }
+}
+@media (max-width: 480px) {
+  .btn-group .btn {
+    font-size: 10px;
+    padding: 0;
+  }
+  #highscores-view span {
+    font-size: 10px;
+  }
+  #profile-view .input-group .btn.disabled {
+    font-size: 10px;
+  }
+  #profile-view .input-group input.form-control {
+    font-size: 10px;
+  }
+  #game-view canvas {
+    margin-bottom: -50px;
+  }
+  #login-view .btn-group-vertical .btn {
+    font-size: 12px;
+  }
+  #login-view .btn-group-vertical span {
+    left: 98%;
+  }
+}
